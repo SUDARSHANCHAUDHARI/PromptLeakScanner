@@ -1,0 +1,11 @@
+{
+  "name": "promptleak-scanner",
+  "private": true,
+  "version": "0.1.0",
+  "description": "PromptLeak Scanner scaffold",
+  "scripts": {
+    "setup": "bash scripts/setup.sh",
+    "seed": "bash scripts/seed-demo-data.sh",
+    "dev": "bash scripts/run-local.sh"
+  }
+}
