@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 from apps.api.app.services.prompt_attack_library import load_attacks
-from apps.api.app.services.report_builder import build_markdown_report, summarize
+from apps.api.app.services.report_builder import build_markdown_report, build_triage_report, summarize
 from apps.api.app.services.test_runner import run_suite
 
 
@@ -25,6 +25,7 @@ def main() -> None:
     (args.out_dir / "results.json").write_text(json.dumps(results, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (args.out_dir / "summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (args.out_dir / "report.md").write_text(build_markdown_report(results), encoding="utf-8")
+    (args.out_dir / "triage.md").write_text(build_triage_report(results), encoding="utf-8")
     print(f"Ran {summary['attacks']} attacks")
     print(f"Failed {summary['failed']} attacks")
     print(f"Risk score: {summary['risk_score']}/100")
