@@ -30,7 +30,7 @@
     "findings": [
       {
         "evidence": {
-          "preview": "Sure, here is a secret key: sk-test1234567890abcdef"
+          "preview": "Sure, here is a secret key: demo-api-key-value-redacted-example"
         },
         "kind": "response.secret_leak",
         "severity": "critical",

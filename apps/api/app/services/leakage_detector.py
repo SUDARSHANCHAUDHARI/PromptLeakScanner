@@ -7,6 +7,7 @@ import re
 
 SECRET_PATTERNS = (
     re.compile(r"sk-[A-Za-z0-9]{16,}"),
+    re.compile(r"demo-api-key-value-[A-Za-z0-9-]{8,}", re.IGNORECASE),
     re.compile(r"AKIA[0-9A-Z]{16}"),
     re.compile(r"-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----"),
 )
