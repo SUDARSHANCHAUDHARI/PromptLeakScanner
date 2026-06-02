@@ -1,80 +1,93 @@
 # PromptLeak Scanner
 
-[![Python](https://img.shields.io/badge/Python-3.12-blue)](#) [![Status](https://img.shields.io/badge/status-product%20polish-green)](#) [![Security](https://img.shields.io/badge/security-defensive%20lab-purple)](#)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](#requirements)
+[![Status](https://img.shields.io/badge/status-MVP-green)](#status)
+[![Security](https://img.shields.io/badge/security-defensive%20lab-purple)](#safe-use)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Security test runner for prompt injection, leakage, jailbreak, and unsafe-response checks in AI apps.
+Security test runner for AI applications. Probes prompt injection, system prompt leakage, role-bypass, and unsafe-response patterns to find weaknesses in LLM-backed apps before attackers do.
 
-- **Portfolio group:** Product-style SaaS project
-- **Status:** Product polish implemented, tested, committed, and pushed to GitHub
-- **GitHub:** https://github.com/SUDARSHANCHAUDHARI/PromptLeakScanner
-- **Local path:** `/Users/screencloudsudarshan/SUDARSHAN_CODE/sudarshan_repos/CyberSecurity/PromptLeakScanner`
+---
 
-## MVP Snapshot
+## Overview
 
-This repository includes a working MVP with safe attack definitions, deterministic safe/unsafe simulations, JSON outputs, Markdown risk report, triage handoff, tests, and Docker demo support.
+PromptLeak Scanner is a defensive testing tool for engineers building LLM-backed applications. It loads an attack prompt library, runs each attack against a configured target (or against a captured response set), and analyzes the responses for leaked system prompts, sensitive data, role-bypass behavior, and unsafe outputs. Outputs include findings, risk-scored summary, and an engineer-friendly remediation report.
 
-## Safe Use
+The current MVP is a Python CLI. A FastAPI + React web dashboard is scaffolded under `apps/` for future development.
 
-This project is defensive and analysis-focused. Use only with logs, systems, repositories, and lab environments you own or have permission to assess.
+## Features
 
-## Core Features
+- Attack prompt library across multiple categories
+- Test runner with safe-mode (uses captured fixtures)
+- Detects system prompt leakage in responses
+- Detects sensitive data leakage (keys, PII patterns)
+- Detects role-bypass and instruction-override success
+- Scores each finding by severity and confidence
+- Outputs JSON findings, risk summary, Markdown report, and triage handoff
 
-- prompt injection test suite
-- secret leakage tests
-- unsafe response detection
-- jailbreak attempt tracking
-- AI risk report
-- release risk level
-- failed category breakdown
-- triage handoff
+## Requirements
 
-## Suggested Stack
+- Python 3.10 or newer
+- Linux, macOS, or Windows
+- No third-party Python packages (standard library only)
+- Optional: Docker for the demo container
 
-FastAPI, React, YAML test suites, Docker.
-
-## Status
-
-Working CLI MVP.
-
-
-## Install
+## Installation
 
 ```bash
+git clone https://github.com/SUDARSHANCHAUDHARI/PromptLeakScanner.git
+cd PromptLeakScanner
 pip install .
 ```
 
-This registers the `prompt-leak-scanner` command. Or run directly:
+This registers the `prompt-leak-scanner` CLI command.
+
+To run without installing:
 
 ```bash
 python3 main.py --help
 ```
 
-## Quick Start
+## Usage
 
-Run the built-in attack suite against the deterministic unsafe simulation:
-
-```bash
-python3 -m apps.api.app.cli --out-dir data/reports
-```
-
-Run it against the safe simulation:
+Run in safe-mode against captured fixture responses:
 
 ```bash
-python3 -m apps.api.app.cli --safe --out-dir data/reports-safe
+python3 main.py --safe --out-dir data/reports
 ```
 
-Run tests:
+Generated outputs in `data/reports/`:
+
+- `findings.json` — detected leaks and unsafe responses
+- `summary.json` — counts and severity breakdown
+- `report.md` — Markdown remediation report
+- `triage.md` — analyst triage checklist
+
+## Project Structure
+
+```
+PromptLeakScanner/
+├── apps/
+│   ├── api/        FastAPI app scaffold (planned)
+│   └── web/        React/Next.js app scaffold (planned)
+├── attacks/        Attack prompt library
+├── data/
+│   ├── samples/    Captured fixture responses for safe-mode testing
+│   └── reports/    Example generated output
+├── docker/         Dockerfile + compose support
+├── docs/           Architecture, security notes, demo
+├── scripts/        Setup, seed, run helpers
+├── tests/          Unit and integration tests
+├── main.py         CLI entrypoint
+├── pyproject.toml  Package metadata
+└── LICENSE
+```
+
+## Testing
 
 ```bash
 python3 -m unittest discover -s tests -p 'test_*.py'
 ```
-
-Generated outputs:
-
-- `data/reports/results.json`
-- `data/reports/summary.json`
-- `data/reports/report.md`
-- `data/reports/triage.md`
 
 ## Docker Demo
 
@@ -82,19 +95,29 @@ Generated outputs:
 docker compose run --rm api
 ```
 
-## Product Polish Capabilities
+## Safe Use
 
-- Loads prompt injection, secret extraction, and jailbreak attack definitions.
-- Simulates safe and unsafe target responses for repeatable local testing.
-- Detects secret leakage, internal instruction leakage, and unsafe compliance.
-- Scores risk and generates JSON results, JSON summary, and a Markdown report.
-- Adds risk level, severity counts, failed category breakdown, and release guidance.
-- Generates an analyst triage report for failed attacks.
+This project is defensive and testing-focused. Use only against LLM applications you own or have explicit written permission to test. The included attack library is for authorized security testing only.
+
+## Status
+
+Working Python CLI MVP. Web dashboard scaffold present but not yet implemented.
 
 ## Roadmap
 
-- Add real target adapter behind a safe authorization boundary
-- Add attack pack tagging and severity policy controls
-- Add regression baselines for prompt updates
-- Add web dashboard for result comparison
-- Add CI gate mode for AI app releases
+- Live target adapters (OpenAI, Anthropic, local models)
+- Multi-turn attack chains
+- Configurable detector packs per industry / use case
+- CI/CD integration for AI app regression testing
+- Web dashboard for findings triage
+
+## License
+
+Released under the [MIT License](LICENSE). You are free to use, modify, and distribute this software with attribution.
+
+## Author
+
+**Sudarshan Chaudhari** — [SudarshanTechLabs](https://github.com/SUDARSHANCHAUDHARI)
+Bangkok, Thailand
+
+For inquiries: open an issue on [GitHub](https://github.com/SUDARSHANCHAUDHARI/PromptLeakScanner/issues).
