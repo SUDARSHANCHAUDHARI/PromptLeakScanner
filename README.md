@@ -36,6 +36,19 @@ FastAPI, React, YAML test suites, Docker.
 
 Working CLI MVP.
 
+
+## Install
+
+```bash
+pip install .
+```
+
+This registers the `prompt-leak-scanner` command. Or run directly:
+
+```bash
+python3 main.py --help
+```
+
 ## Quick Start
 
 Run the built-in attack suite against the deterministic unsafe simulation:
